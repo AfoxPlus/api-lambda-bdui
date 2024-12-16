@@ -1,14 +1,14 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import establishmentDetail from '@functions/establishment';
 
 const serverlessConfiguration: AWS = {
-  service: 'scaffolding-api-lambda',
-  frameworkVersion: '2',
-  plugins: ['serverless-esbuild','serverless-offline'],
+  service: 'api-lambda-bdui',
+  frameworkVersion: '4',
+  plugins: ['serverless-offline'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs14.x',
+    runtime: 'nodejs18.x',
     profile: '${self:custom.profile.${opt:stage}}',
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -17,25 +17,25 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      MONGODB: '${self:custom.env.${opt:stage}.MONGODB_URL}',
+      API_RESTAURANTS: '${self:custom.env.${opt:stage}.API_RESTAURANTS}',
+      API_PRODUCTS: '${self:custom.env.${opt:stage}.API_PRODUCTS}',
       VERSION: '${self:custom.version}',
       STAGE: '${opt:stage}',
     },
     lambdaHashingVersion: '20201221',
   },
-  // import the function via paths
-  functions: { hello },
+  functions: { establishmentDetail },
   package: { individually: true },
   custom: {
     stage: '${opt:stage}',
     env: '${file(env.json)}',
-    version: '1.0.0',
+    version: '2.0.0',
     esbuild: {
       bundle: true,
       minify: false,
       sourcemap: true,
       exclude: ['aws-sdk'],
-      target: 'node14',
+      target: 'node18',
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
