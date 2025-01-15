@@ -2,7 +2,7 @@ import { Card, Component, Content, Grid, Icon } from "@core/domain/entities/Comp
 import { BDUIRepository } from "@core/domain/repositories/BDUIRepository";
 import { RestaurantNetworkDataSource } from "@core/data/sources/RestaurantNetworkDataSource";
 import { ProductNetworkDataSource } from "../sources/ProductNetworkDataSource";
-import { Product } from "../sources/models/ProductResponse";
+import { Product } from "@core/data/sources/models/ProductResponse";
 
 export class BDUIDataRepository implements BDUIRepository {
 
@@ -28,6 +28,7 @@ export class BDUIDataRepository implements BDUIRepository {
         }
         const contentMenu: Content = { title: "Menu" }
         const menuIcon = new Icon({
+            name: "ICON",
             type: "ICON",
             iconToken: "icon_dish_outline",
             hintToken: "gray700",
@@ -35,7 +36,8 @@ export class BDUIDataRepository implements BDUIRepository {
         });
 
         const sectionMenu = new Component({
-            type: "SECTION",
+            name: "SECTION",
+            type: "CARD",
             spacingHorizontal: 'spacing16',
             spacingVertical: 'spacing08',
             backgroundToken: 'gray100',
@@ -46,7 +48,8 @@ export class BDUIDataRepository implements BDUIRepository {
         });
 
         const headerCard = new Component({
-            type: "TOP_ESTABLISHMENT_DETAIL",
+            name: "TOP_ESTABLISHMENT_DETAIL",
+            type: "CARD",
             spacingHorizontal: 'spacing00',
             spacingVertical: 'spacing00',
             backgroundToken: 'light01',
@@ -56,7 +59,8 @@ export class BDUIDataRepository implements BDUIRepository {
         });
 
         const productsCards = products?.map((item) => new Card({
-            type: "CARD_PRODUCT",
+            name: "CARD_PRODUCT",
+            type: "CARD",
             elevation: "spacing02",
             border: "spacing08",
             stroke: "spacing02",
@@ -64,7 +68,8 @@ export class BDUIDataRepository implements BDUIRepository {
         }))
 
         const gridMenu = new Grid({
-            type: "ROW_CARD_MENU",
+            name: "ROW_CARD_MENU",
+            type: "GRID",
             spacingHorizontal: "spacing16",
             spacingVertical: "spacing16",
             spacingBetweenComponents: "spacing12",

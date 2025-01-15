@@ -1,10 +1,11 @@
-import { ComponentType, GridType } from "@core/domain/entities/Types"
+import { ComponentName, ComponentType, GridType } from "@core/domain/entities/Types"
 
 export interface Content {
     [key: string]: any
 }
 
 interface ComponentConfig {
+    name: ComponentName,
     type: ComponentType;
     spacingHorizontal?: string;
     spacingVertical?: string;
@@ -16,6 +17,7 @@ interface ComponentConfig {
 }
 
 export class Component {
+    name: ComponentName
     type: ComponentType
     spacingHorizontal?: string
     spacingVertical?: string
@@ -26,18 +28,20 @@ export class Component {
     children?: Component[]
 
     constructor(config: ComponentConfig) {
-        this.type = config.type;
-        this.spacingHorizontal = config.spacingHorizontal;
-        this.spacingVertical = config.spacingVertical;
-        this.backgroundToken = config.backgroundToken;
-        this.colorToken = config.colorToken;
-        this.typographyToken = config.typographyToken;
-        this.content = config.content;
-        this.children = config.children;
+        this.name = config.name
+        this.type = config.type
+        this.spacingHorizontal = config.spacingHorizontal
+        this.spacingVertical = config.spacingVertical
+        this.backgroundToken = config.backgroundToken
+        this.colorToken = config.colorToken
+        this.typographyToken = config.typographyToken
+        this.content = config.content
+        this.children = config.children
     }
 }
 
 interface GridConfig {
+    name: ComponentName,
     type: ComponentType,
     spacingHorizontal?: string,
     spacingVertical?: string,
@@ -57,6 +61,7 @@ export class Grid extends Component {
 
     constructor(config: GridConfig) {
         super({
+            name: config.name,
             type: config.type,
             spacingHorizontal: config.spacingHorizontal,
             spacingVertical: config.spacingVertical,
@@ -71,6 +76,7 @@ export class Grid extends Component {
 }
 
 interface CardConfig {
+    name: ComponentName,
     type: ComponentType,
     elevation?: string,
     border?: string,
@@ -89,6 +95,7 @@ export class Card extends Component {
     stroke: string
     constructor(config: CardConfig) {
         super({
+            name: config.name,
             type: config.type,
             spacingHorizontal: config.spacingHorizontal,
             spacingVertical: config.spacingVertical,
@@ -104,6 +111,7 @@ export class Card extends Component {
 }
 
 interface IconConfig {
+    name: ComponentName,
     type: ComponentType,
     iconToken: string,
     hintToken: string,
@@ -119,6 +127,7 @@ export class Icon extends Component {
     hintToken: string
     constructor(config: IconConfig) {
         super({
+            name: config.name,
             type: config.type,
             spacingHorizontal: config.spacingHorizontal,
             spacingVertical: config.spacingVertical,
