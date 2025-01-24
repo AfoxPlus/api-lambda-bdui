@@ -1,4 +1,4 @@
-import { Card, Component, Content, Grid, Icon } from "@core/domain/entities/Component";
+import { Button, Card, Component, Content, Grid, Icon } from "@core/domain/entities/Component";
 import { BDUIRepository } from "@core/domain/repositories/BDUIRepository";
 import { RestaurantNetworkDataSource } from "@core/data/sources/RestaurantNetworkDataSource";
 import { ProductNetworkDataSource } from "../sources/ProductNetworkDataSource";
@@ -26,6 +26,28 @@ export class BDUIDataRepository implements BDUIRepository {
             establishmentUserRatingCount: establishment.userRatingCount,
             establishmentIsVerified: establishment.isVerified
         }
+
+        const contentEstablishment: Content = { title: "Acerca del establecimiento" }
+        const establishmentIcon = new Icon({
+            name: "ICON",
+            type: "ICON",
+            iconToken: "icon_about_info_outline",
+            hintToken: "gray700",
+            size: "size24"
+        });
+        const sectionEstablishment = new Component({
+            name: "SECTION",
+            type: "CARD",
+            spacingHorizontal: 'spacing16',
+            spacingVertical: 'spacing08',
+            backgroundToken: 'gray100',
+            colorToken: 'gray700',
+            typographyToken: 'header05Bold',
+            content: contentEstablishment,
+            children: [establishmentIcon]
+        });
+
+
         const contentMenu: Content = { title: "Menu" }
         const menuIcon = new Icon({
             name: "ICON",
@@ -79,9 +101,23 @@ export class BDUIDataRepository implements BDUIRepository {
             items: productsCards
         })
 
+
+        const buttonSeeMenu = new Button({
+            name: "BUTTON_SEE_MENU",
+            type: "BUTTON",
+            style: "OutlineMedium",
+            spacingHorizontal: "spacing16",
+            spacingVertical: "spacing12",
+            colorToken: "primaryColor",
+            content: { title: "Ver el menú completo" }
+        })
+
+
         components.push(headerCard)
         components.push(sectionMenu)
         components.push(gridMenu)
+        components.push(buttonSeeMenu)
+        components.push(sectionEstablishment)
 
         return components
     }
