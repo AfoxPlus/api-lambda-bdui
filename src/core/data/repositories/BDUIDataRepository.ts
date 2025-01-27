@@ -1,8 +1,13 @@
-import { Button, Card, Component, Content, Grid, Icon } from "@core/domain/entities/Component";
+import { Component, Content } from "@core/domain/entities/Component";
 import { BDUIRepository } from "@core/domain/repositories/BDUIRepository";
 import { RestaurantNetworkDataSource } from "@core/data/sources/RestaurantNetworkDataSource";
 import { ProductNetworkDataSource } from "../sources/ProductNetworkDataSource";
 import { Product } from "@core/data/sources/models/ProductResponse";
+import { Icon } from "@core/domain/entities/IconComponent";
+import { Card } from "@core/domain/entities/CardComponent";
+import { Grid } from "@core/domain/entities/GridComponent";
+import { Button } from "@core/domain/entities/ButtonComponent";
+import { Text } from "@core/domain/entities/TextComponent";
 
 export class BDUIDataRepository implements BDUIRepository {
 
@@ -92,8 +97,8 @@ export class BDUIDataRepository implements BDUIRepository {
         const gridMenu = new Grid({
             name: "ROW_CARD_MENU",
             type: "GRID",
-            spacingHorizontal: "spacing16",
-            spacingVertical: "spacing16",
+            spacingHorizontal: "spacing00",
+            spacingVertical: "spacing12",
             spacingBetweenComponents: "spacing12",
             gridType: "ROW",
             gridSize: 1,
@@ -112,12 +117,24 @@ export class BDUIDataRepository implements BDUIRepository {
             content: { title: "Ver el menú completo" }
         })
 
+        const textDescription = new Text({
+            name: "EXPANDABLE_TEXT",
+            type: "TEXT",
+            colorExpandableText: "primaryColor",
+            typographyTokenExpandableText: "paragraph01Bold",
+            maxLines: 3,
+            spacingHorizontal: "spacing16",
+            spacingVertical: "spacing12",
+            colorToken: "secondaryColor",
+            content: { title: establishment.description }
+        })
 
         components.push(headerCard)
         components.push(sectionMenu)
         components.push(gridMenu)
         components.push(buttonSeeMenu)
         components.push(sectionEstablishment)
+        components.push(textDescription)
 
         return components
     }
