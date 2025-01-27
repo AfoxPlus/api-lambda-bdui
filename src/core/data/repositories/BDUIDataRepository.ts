@@ -126,7 +126,17 @@ export class BDUIDataRepository implements BDUIRepository {
             spacingHorizontal: "spacing16",
             spacingVertical: "spacing12",
             colorToken: "secondaryColor",
-            content: { title: establishment.description }
+            content: { text: establishment.description }
+        })
+
+        const textTitleLocation = new Text({
+            name: "TEXT",
+            type: "TEXT",
+            spacingHorizontal: "spacing16",
+            spacingVertical: "spacing12",
+            colorToken: "secondaryColor",
+            typographyToken: "header05Bold",
+            content: { text: "¿Como llegar?" }
         })
 
         components.push(headerCard)
@@ -135,6 +145,7 @@ export class BDUIDataRepository implements BDUIRepository {
         components.push(buttonSeeMenu)
         components.push(sectionEstablishment)
         components.push(textDescription)
+        components.push(textTitleLocation)
 
         return components
     }
