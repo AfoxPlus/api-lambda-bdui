@@ -56,7 +56,32 @@ export class EstablishmentComponentLocalDataSource {
         })
     }
 
-    getProductCard(content: Content): Component {
+    getGridPhotos(photoCard: Card[]): Component {
+        return new Grid({
+            name: "GRID_PHOTOS",
+            type: "GRID",
+            spacingHorizontal: "spacing00",
+            spacingVertical: "spacing12",
+            spacingBetweenComponents: "spacing02",
+            gridType: "TABLE",
+            gridSize: 3,
+            backgroundToken: "light01",
+            items: photoCard
+        })
+    }
+
+    getPhotoCard(content: Content): Card {
+        return new Card({
+            name: "CARD_PHOTO",
+            type: "CARD",
+            elevation: "spacing00",
+            border: "spacing00",
+            stroke: "spacing00",
+            content: content
+        })
+    }
+
+    getProductCard(content: Content): Card {
         return new Card({
             name: "CARD_PRODUCT",
             type: "CARD",

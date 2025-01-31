@@ -5,6 +5,7 @@ import { ProductNetworkDataSource } from "@core/data/sources/network/ProductNetw
 import { EstablishmentComponentLocalDataSource } from "@core/data/sources/local/EstablishmentComponentLocalDataSource";
 import { Product } from "@core/data/sources/network/models/ProductResponse";
 import { Screen } from "@core/domain/entities/Screen";
+import { Photo } from "../sources/network/models/RestaurantResponse";
 
 export class BDUIDataRepository implements BDUIRepository {
 
@@ -41,6 +42,10 @@ export class BDUIDataRepository implements BDUIRepository {
         const expandableText = this.establishmentComponent.getExpandableText(establishment.description)
         const textTitleLocation = this.establishmentComponent.getText("¿Como llegar?")
         const sectionPhotos = this.establishmentComponent.getSection("icon_camera_image_outline", "Fotos")
+        const photosCards = establishment.photos?.map((item) => this.establishmentComponent.getPhotoCard(this.getPhotoContent(item)))
+        const gridPhotos = this.establishmentComponent.getGridPhotos(photosCards)
+        const buttonSeePhotos = this.establishmentComponent.getButtonOutlineMedium("Ver todas las fotos", "see_more_photos")
+
 
         components.push(sectionMenu)
         components.push(gridMenu)
@@ -49,6 +54,8 @@ export class BDUIDataRepository implements BDUIRepository {
         components.push(expandableText)
         components.push(textTitleLocation)
         components.push(sectionPhotos)
+        components.push(gridPhotos)
+        components.push(buttonSeePhotos)
 
         return new Screen({ topBar: topBar, content: components })
 
@@ -62,6 +69,16 @@ export class BDUIDataRepository implements BDUIRepository {
             productDescription: product.description,
             productCurrency: product.currency,
             productPrice: product.price
+        }
+        return content
+    }
+
+    private getPhotoContent(photo: Photo): Content {
+        const content: Content =
+        {
+            name: photo.name,
+            heightPx: photo.heightPx,
+            widthPx: photo.widthPx
         }
         return content
     }
