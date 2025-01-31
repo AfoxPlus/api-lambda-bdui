@@ -16,6 +16,7 @@ interface ComponentConfig {
 }
 
 export class Component {
+    id: string
     name: ComponentName
     type: ComponentType
     spacingHorizontal?: string
@@ -27,6 +28,7 @@ export class Component {
     children?: Component[]
 
     constructor(config: ComponentConfig) {
+        this.id = randomId()
         this.name = config.name
         this.type = config.type
         this.spacingHorizontal = config.spacingHorizontal
@@ -38,3 +40,7 @@ export class Component {
         this.children = config.children
     }
 }
+
+const randomId = (length = 6) => {
+    return Math.random().toString(36).substring(2, length + 2);
+};
