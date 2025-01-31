@@ -12,6 +12,7 @@ interface CardConfig {
     typographyToken?: string,
     backgroundToken?: string,
     colorToken?: string,
+    children?: Component[],
     content?: Content
 }
 
@@ -28,6 +29,7 @@ export class Card extends Component {
             backgroundToken: config.backgroundToken,
             colorToken: config.colorToken,
             typographyToken: config.typographyToken,
+            children: config.children,
             content: config.content
         })
         this.elevation = config.elevation

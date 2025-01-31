@@ -6,15 +6,17 @@ import { Icon } from "@core/domain/entities/IconComponent";
 import { Text } from "@core/domain/entities/TextComponent";
 
 export class EstablishmentComponentLocalDataSource {
-    getSection(iconToken: string, title: string): Component {
-        const icon = new Icon({
+    getIcon(iconToken: string): Icon {
+        return new Icon({
             name: "ICON",
             type: "ICON",
             iconToken: iconToken,
             hintToken: "gray700",
             size: "size24"
         });
+    }
 
+    getSection(iconToken: string, title: string): Component {
         const section = new Component({
             name: "SECTION",
             type: "CARD",
@@ -24,7 +26,7 @@ export class EstablishmentComponentLocalDataSource {
             colorToken: 'gray700',
             typographyToken: 'header05Bold',
             content: { title: title },
-            children: [icon]
+            children: [this.getIcon(iconToken)]
         });
         return section;
     }
@@ -128,6 +130,38 @@ export class EstablishmentComponentLocalDataSource {
             colorToken: colorToken,
             typographyToken: typographyToken,
             content: { text: text }
+        })
+    }
+
+    getRowIconInfo(tokenIcon: string, text: string): Grid {
+        const iconCard = new Card({
+            name: "CARD_ICON",
+            type: "CARD",
+            elevation: "spacing02",
+            border: "spacing08",
+            stroke: "spacing02",
+            children: [this.getIcon(tokenIcon)]
+        })
+
+        const textCard = new Card({
+            name: "CARD_TEXT",
+            type: "CARD",
+            elevation: "spacing00",
+            border: "spacing00",
+            stroke: "spacing00",
+            content: { text: text }
+        })
+
+        return new Grid({
+            name: "ROW_ICON_TEXT",
+            type: "GRID",
+            spacingHorizontal: "spacing16",
+            spacingVertical: "spacing08",
+            spacingBetweenComponents: "spacing02",
+            gridType: "ROW",
+            gridSize: 3,
+            backgroundToken: "light01",
+            items: [iconCard, textCard]
         })
     }
 

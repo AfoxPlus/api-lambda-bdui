@@ -45,6 +45,8 @@ export class BDUIDataRepository implements BDUIRepository {
         const photosCards = establishment.photos?.map((item) => this.establishmentComponent.getPhotoCard(this.getPhotoContent(item)))
         const gridPhotos = this.establishmentComponent.getGridPhotos(photosCards)
         const buttonSeePhotos = this.establishmentComponent.getButtonOutlineMedium("Ver todas las fotos", "see_more_photos")
+        const getLocationInfo = this.establishmentComponent.getRowIconInfo("icon_location_outline", establishment.address)
+        const getPhone = this.establishmentComponent.getRowIconInfo("icon_whatsapp_outline", establishment.phone)
 
 
         components.push(sectionMenu)
@@ -53,6 +55,8 @@ export class BDUIDataRepository implements BDUIRepository {
         components.push(sectionEstablishment)
         components.push(expandableText)
         components.push(textTitleLocation)
+        components.push(getLocationInfo)
+        components.push(getPhone)
         components.push(sectionPhotos)
         components.push(gridPhotos)
         components.push(buttonSeePhotos)
