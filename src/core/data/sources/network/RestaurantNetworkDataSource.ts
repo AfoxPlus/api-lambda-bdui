@@ -1,5 +1,5 @@
 import { GlobalProperties } from "@utils/ApiProperties";
-import { Restaurant, RestaurantResponse } from "./models/RestaurantResponse";
+import { Restaurant, RestaurantResponse } from "./network/models/RestaurantResponse";
 import { AxiosResponse } from "axios";
 
 export class RestaurantNetworkDataSource {

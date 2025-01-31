@@ -1,6 +1,6 @@
 import { GlobalProperties } from "@utils/ApiProperties"
 import { AxiosResponse } from "axios"
-import { Product, ProductResponse } from "@core/data/sources/models/ProductResponse"
+import { Product, ProductResponse } from "@core/data/sources/network/models/ProductResponse"
 
 export class ProductNetworkDataSource {
 

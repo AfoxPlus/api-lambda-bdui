@@ -1,28 +1,28 @@
 import { Component, Content } from "@core/domain/entities/Component";
 import { BDUIRepository } from "@core/domain/repositories/BDUIRepository";
-import { RestaurantNetworkDataSource } from "@core/data/sources/RestaurantNetworkDataSource";
-import { ProductNetworkDataSource } from "../sources/ProductNetworkDataSource";
-import { Product } from "@core/data/sources/models/ProductResponse";
-import { Icon } from "@core/domain/entities/IconComponent";
-import { Card } from "@core/domain/entities/CardComponent";
-import { Grid } from "@core/domain/entities/GridComponent";
-import { Button } from "@core/domain/entities/ButtonComponent";
-import { Text } from "@core/domain/entities/TextComponent";
+import { RestaurantNetworkDataSource } from "@core/data/sources/network/RestaurantNetworkDataSource";
+import { ProductNetworkDataSource } from "@core/data/sources/network/ProductNetworkDataSource";
+import { EstablishmentComponentLocalDataSource } from "@core/data/sources/local/EstablishmentComponentLocalDataSource";
+import { Product } from "@core/data/sources/network/models/ProductResponse";
+import { Screen } from "@core/domain/entities/Screen";
 
 export class BDUIDataRepository implements BDUIRepository {
 
     constructor(private restaurantDataSource: RestaurantNetworkDataSource,
-        private productDataSource: ProductNetworkDataSource
+        private productDataSource: ProductNetworkDataSource,
+        private establishmentComponent: EstablishmentComponentLocalDataSource
     ) { }
 
-    getEstablishmentDetail = async (code: string): Promise<Component[]> => {
+    getEstablishmentDetail = async (code: string): Promise<Screen> => {
 
         const [establishment, products] = await Promise.all([
             this.restaurantDataSource.findRestaurant(code),
             this.productDataSource.getProducts(code)
         ]);
+
         const components: Component[] = []
-        const headerCardContent: Content = {
+
+        const topBarContent: Content = {
             establishmentUrlBanner: establishment.urlImageBanner,
             establishmentUrlLogo: establishment.urlImageLogo,
             establishmentName: establishment.name,
@@ -32,122 +32,26 @@ export class BDUIDataRepository implements BDUIRepository {
             establishmentIsVerified: establishment.isVerified
         }
 
-        const contentEstablishment: Content = { title: "Acerca del establecimiento" }
-        const establishmentIcon = new Icon({
-            name: "ICON",
-            type: "ICON",
-            iconToken: "icon_about_info_outline",
-            hintToken: "gray700",
-            size: "size24"
-        });
-        const sectionEstablishment = new Component({
-            name: "SECTION",
-            type: "CARD",
-            spacingHorizontal: 'spacing16',
-            spacingVertical: 'spacing08',
-            backgroundToken: 'gray100',
-            colorToken: 'gray700',
-            typographyToken: 'header05Bold',
-            content: contentEstablishment,
-            children: [establishmentIcon]
-        });
+        const topBar = this.establishmentComponent.getTopBar(topBarContent)
+        const sectionMenu = this.establishmentComponent.getSection("icon_dish_outline", "Menu")
+        const sectionEstablishment = this.establishmentComponent.getSection("icon_about_info_outline", "Acerca del establecimiento")
+        const productsCards = products?.map((item) => this.establishmentComponent.getProductCard(this.getProductContent(item)))
+        const gridMenu = this.establishmentComponent.getGridMenu(productsCards)
+        const buttonSeeMenu = this.establishmentComponent.getButtonOutlineMedium("Ver el menú completo", "see_more_menu")
+        const expandableText = this.establishmentComponent.getExpandableText(establishment.description)
+        const textTitleLocation = this.establishmentComponent.getText("¿Como llegar?")
+        const sectionPhotos = this.establishmentComponent.getSection("icon_camera_image_outline", "Fotos")
 
-
-        const contentMenu: Content = { title: "Menu" }
-        const menuIcon = new Icon({
-            name: "ICON",
-            type: "ICON",
-            iconToken: "icon_dish_outline",
-            hintToken: "gray700",
-            size: "size24"
-        });
-
-        const sectionMenu = new Component({
-            name: "SECTION",
-            type: "CARD",
-            spacingHorizontal: 'spacing16',
-            spacingVertical: 'spacing08',
-            backgroundToken: 'gray100',
-            colorToken: 'gray700',
-            typographyToken: 'header05Bold',
-            content: contentMenu,
-            children: [menuIcon]
-        });
-
-        const headerCard = new Component({
-            name: "TOP_ESTABLISHMENT_DETAIL",
-            type: "CARD",
-            spacingHorizontal: 'spacing00',
-            spacingVertical: 'spacing00',
-            backgroundToken: 'light01',
-            colorToken: 'secondaryColor',
-            typographyToken: 'header02Bold',
-            content: headerCardContent
-        });
-
-        const productsCards = products?.map((item) => new Card({
-            name: "CARD_PRODUCT",
-            type: "CARD",
-            elevation: "spacing02",
-            border: "spacing08",
-            stroke: "spacing02",
-            content: this.getProductContent(item)
-        }))
-
-        const gridMenu = new Grid({
-            name: "ROW_CARD_MENU",
-            type: "GRID",
-            spacingHorizontal: "spacing00",
-            spacingVertical: "spacing12",
-            spacingBetweenComponents: "spacing12",
-            gridType: "ROW",
-            gridSize: 1,
-            backgroundToken: "light01",
-            items: productsCards
-        })
-
-
-        const buttonSeeMenu = new Button({
-            name: "BUTTON_SEE_MENU",
-            type: "BUTTON",
-            style: "OutlineMedium",
-            spacingHorizontal: "spacing16",
-            spacingVertical: "spacing12",
-            colorToken: "primaryColor",
-            content: { title: "Ver el menú completo" }
-        })
-
-        const textDescription = new Text({
-            name: "EXPANDABLE_TEXT",
-            type: "TEXT",
-            colorExpandableText: "primaryColor",
-            typographyTokenExpandableText: "paragraph01Bold",
-            maxLines: 3,
-            spacingHorizontal: "spacing16",
-            spacingVertical: "spacing12",
-            colorToken: "secondaryColor",
-            content: { text: establishment.description }
-        })
-
-        const textTitleLocation = new Text({
-            name: "TEXT",
-            type: "TEXT",
-            spacingHorizontal: "spacing16",
-            spacingVertical: "spacing12",
-            colorToken: "secondaryColor",
-            typographyToken: "header05Bold",
-            content: { text: "¿Como llegar?" }
-        })
-
-        components.push(headerCard)
         components.push(sectionMenu)
         components.push(gridMenu)
         components.push(buttonSeeMenu)
         components.push(sectionEstablishment)
-        components.push(textDescription)
+        components.push(expandableText)
         components.push(textTitleLocation)
+        components.push(sectionPhotos)
 
-        return components
+        return new Screen({ topBar: topBar, content: components })
+
     }
 
     private getProductContent(product: Product): Content {

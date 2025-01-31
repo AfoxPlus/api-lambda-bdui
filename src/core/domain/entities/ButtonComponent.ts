@@ -9,6 +9,7 @@ interface ButtonConfig {
     shape?: string,
     contentPadding?: { vertical: string, horizontal: string },
     state?: string,
+    action?: string,
     spacingHorizontal?: string,
     spacingVertical?: string,
     typographyToken?: string,
@@ -22,6 +23,7 @@ export class Button extends Component {
     shape?: string
     contentPadding?: { vertical: string, horizontal: string }
     state?: string
+    action?: string
 
     constructor(config: ButtonConfig) {
         super({
@@ -39,6 +41,7 @@ export class Button extends Component {
         this.shape = config.shape
         this.contentPadding = config.contentPadding
         this.state = config.state
+        this.action = config.action
 
     }
 }

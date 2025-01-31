@@ -1,5 +1,5 @@
-import { Component } from "@core/domain/entities/Component";
+import { Screen } from "@core/domain/entities/Screen"
 
 export interface BDUIRepository {
-    getEstablishmentDetail(code: string): Promise<Component[]>
+    getEstablishmentDetail(code: string): Promise<Screen>
 }
