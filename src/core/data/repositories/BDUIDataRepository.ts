@@ -30,7 +30,9 @@ export class BDUIDataRepository implements BDUIRepository {
             establishmentPrimaryType: establishment.primaryType,
             establishmentRating: establishment.rating,
             establishmentUserRatingCount: establishment.userRatingCount,
-            establishmentIsVerified: establishment.isVerified
+            establishmentIsVerified: establishment.isVerified,
+            establishmenthasSubscription: true,
+            establishmentIsOpen: establishment.openNow
         }
 
         const topBar = this.establishmentComponent.getTopBar(topBarContent)
