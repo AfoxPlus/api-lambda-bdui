@@ -45,8 +45,12 @@ export class BDUIDataRepository implements BDUIRepository {
         const photosCards = establishment.photos?.map((item) => this.establishmentComponent.getPhotoCard(this.getPhotoContent(item)))
         const gridPhotos = this.establishmentComponent.getGridPhotos(photosCards)
         const buttonSeePhotos = this.establishmentComponent.getButtonOutlineMedium("Ver todas las fotos", "see_more_photos")
-        const getLocationInfo = this.establishmentComponent.getRowIconInfo("icon_location_outline", establishment.address)
-        const getPhone = this.establishmentComponent.getRowIconInfo("icon_whatsapp_outline", establishment.phone)
+
+        const message = "Hello! I am interested in your service.";
+        const urlPhone = `https://wa.me/${establishment.phone}?text=${encodeURIComponent(message)}`;
+
+        const getLocationInfo = this.establishmentComponent.getRowIconInfo("icon_location_outline", establishment.address, establishment.googleMapsUri)
+        const getPhone = this.establishmentComponent.getRowIconInfo("icon_whatsapp_outline", establishment.phone, urlPhone)
 
 
         components.push(sectionMenu)

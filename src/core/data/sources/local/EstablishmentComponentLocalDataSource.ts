@@ -133,7 +133,7 @@ export class EstablishmentComponentLocalDataSource {
         })
     }
 
-    getRowIconInfo(tokenIcon: string, text: string): Grid {
+    getRowIconInfo(tokenIcon: string, text: string, uri: string): Grid {
         const iconCard = new Card({
             name: "CARD_ICON",
             type: "CARD",
@@ -149,7 +149,7 @@ export class EstablishmentComponentLocalDataSource {
             elevation: "spacing00",
             border: "spacing00",
             stroke: "spacing00",
-            content: { text: text }
+            content: { text: text, uri: uri }
         })
 
         return new Grid({
