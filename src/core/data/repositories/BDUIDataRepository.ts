@@ -35,18 +35,20 @@ export class BDUIDataRepository implements BDUIRepository {
             establishmentIsOpen: establishment.openNow
         }
 
+        const hostUrl = "https://yalistoapp.com/"
+
         const topBar = this.establishmentComponent.getTopBar(topBarContent)
         const sectionMenu = this.establishmentComponent.getSection("icon_dish_outline", "Menu")
         const sectionEstablishment = this.establishmentComponent.getSection("icon_about_info_outline", "Acerca del establecimiento")
-        const productsCards = products?.map((item) => this.establishmentComponent.getProductCard(this.getProductContent(item)))
+        const productsCards = products?.map((item) => this.establishmentComponent.getProductCard(this.getProductContent(item), hostUrl + "product/" + item.code))
         const gridMenu = this.establishmentComponent.getGridMenu(productsCards)
-        const buttonSeeMenu = this.establishmentComponent.getButtonOutlineMedium("Ver el menú completo", "see_more_menu")
+        const buttonSeeMenu = this.establishmentComponent.getButtonOutlineMedium("Ver el menú completo", hostUrl + "menu/" + establishment.code)
         const expandableText = this.establishmentComponent.getExpandableText(establishment.description)
         const textTitleLocation = this.establishmentComponent.getText("¿Como llegar?")
         const sectionPhotos = this.establishmentComponent.getSection("icon_camera_image_outline", "Fotos")
         const photosCards = establishment.photos?.map((item) => this.establishmentComponent.getPhotoCard(this.getPhotoContent(item)))
         const gridPhotos = this.establishmentComponent.getGridPhotos(photosCards)
-        const buttonSeePhotos = this.establishmentComponent.getButtonOutlineMedium("Ver todas las fotos", "see_more_photos")
+        const buttonSeePhotos = this.establishmentComponent.getButtonOutlineMedium("Ver todas las fotos", hostUrl + "photos/" + establishment.code)
 
         const message = "Hello! I am interested in your service.";
         const urlPhone = `https://wa.me/${establishment.phone}?text=${encodeURIComponent(message)}`;

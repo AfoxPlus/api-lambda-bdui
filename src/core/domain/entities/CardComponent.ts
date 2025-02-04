@@ -7,6 +7,7 @@ interface CardConfig {
     elevation?: string,
     border?: string,
     stroke?: string,
+    deeplink?: string,
     spacingHorizontal?: string,
     spacingVertical?: string,
     typographyToken?: string,
@@ -20,6 +21,7 @@ export class Card extends Component {
     elevation: string
     border: string
     stroke: string
+    deeplink?: string
     constructor(config: CardConfig) {
         super({
             name: config.name,
@@ -35,5 +37,6 @@ export class Card extends Component {
         this.elevation = config.elevation
         this.border = config.border
         this.stroke = config.stroke
+        this.deeplink = config.deeplink
     }
 }

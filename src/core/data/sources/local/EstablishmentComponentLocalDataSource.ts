@@ -83,18 +83,19 @@ export class EstablishmentComponentLocalDataSource {
         })
     }
 
-    getProductCard(content: Content): Card {
+    getProductCard(content: Content, deeplink: string): Card {
         return new Card({
             name: "CARD_PRODUCT",
             type: "CARD",
             elevation: "spacing02",
             border: "spacing08",
             stroke: "spacing02",
+            deeplink: deeplink,
             content: content
         })
     }
 
-    getButtonOutlineMedium(title: string, action: string): Component {
+    getButtonOutlineMedium(title: string, deeplink: string): Component {
         return new Button({
             name: "SEE_MORE_BUTTON",
             type: "BUTTON",
@@ -102,7 +103,7 @@ export class EstablishmentComponentLocalDataSource {
             spacingHorizontal: "spacing16",
             spacingVertical: "spacing12",
             colorToken: "primaryColor",
-            action: action,
+            deeplink: deeplink,
             content: { title: title }
         })
     }
